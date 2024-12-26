@@ -101,11 +101,11 @@
     <h1>Add New Quize ques.</h1>
     <form id="form" action="">
         <h3>Quize Question</h3>
-        <input id="question" type="text" placeholder="Enter option A">
-        <input id="optionA" type="text" placeholder="Enter option B">
-        <input id="optionB" type="text" placeholder="Enter option C">
-        <input id="optionC" type="text" placeholder="Enter option D">
-        <input id="optionD" type="text" placeholder="Enter Password">
+        <input id="question" type="text" placeholder="Enter question">
+        <input id="optionA" type="text" placeholder="Enter option A">
+        <input id="optionB" type="text" placeholder="Enter option B">
+        <input id="optionC" type="text" placeholder="Enter option C">
+        <input id="optionD" type="text" placeholder="Enter option D">
         <input id="correctOption" type="text" placeholder="Enter correct option">
         <button id="submit">Submit</button>
     </form>
@@ -148,24 +148,24 @@
 
                 let card = document.createElement("div")
                 let question = document.createElement("h4")
-                question.textContent = e.question
+                question.textContent =`question:${ e.question}`
 
                 let optionA = document.createElement("h4")
-                optionA.textContent = e.optionA
+                optionA.textContent = `optionA :${e.optionA}`
 
                 let optionB = document.createElement("h4")
-                optionB.textContent = e.optionB
+                optionB.textContent = `optionB :${e.optionB}`
 
 
                 let optionC = document.createElement("h4")
-                optionC.textContent = e.optionC
+                optionC.textContent = `optionC :${e.optionC}`
 
 
                 let optionD = document.createElement("h4")
-                optionD.textContent = e.optionD
+                optionD.textContent = `optionD: ${e.optionD}`
 
                 let correctOption = document.createElement("h4")
-                correctOption.textContent = e.correctOption
+                correctOption.textContent = `CorrectOption: ${e.correctOption}`
 
                 card.append(question, optionA, optionB,optionC, optionD, correctOption)
                 displayContainer.append(card)
