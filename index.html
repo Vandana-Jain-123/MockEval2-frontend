@@ -1,18 +1,122 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <h1>Quize Mock</h1>
-      
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        #navbar {
+            display: flex;
+            background-color: rgb(12, 138, 138);
+            color: white;
+            text-align: justify;
+            height: 50px;
+            gap: 20px;
+
+
+        }
+
+
+
+        #navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 25px;
+            margin-left: 10%;
+            padding-top: 10px;
+        }
+
+        #form {
+            margin-left: 40%;
+            margin-top: 6%;
+            padding-top: 30px;
+            background-color: rgb(128, 184, 184);
+            width: 320px;
+            height: 350px;
+            color: white;
+            text-align: center;
+
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+        }
+
+
+        #form input {
+            padding: 10px;
+            margin-top: 5%;
+            width: 250px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: none;
+
+        }
+
+        #form select {
+            margin-top: 10px;
+            width: 275px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+        }
+
+        #form button {
+            margin-top: 10px;
+            width: 275px;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 10px;
+            background-color: rgb(12, 138, 138);
+            color: white;
+            border: none;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <nav id="navbar">
+        <a href="index.html">index</a>
+        <a href="quize.html">quize</a>
+        <a href="question.html">question</a>
+
+    </nav>
+    <h1>Quize Mock</h1>
+
+
+    <form id="form" action="">
+        <h3>Please Login.....</h3>
+        <input id="email" type="email" placeholder="Enter Email">
+        <input id="password" type="password" placeholder="Enter Password">
+        <button id="submit">Submit</button>
+    </form>
+
+    <script  type="module">
+        import { baseUrl } from "./baseUrl.js"
+        let form = document.getElementById("form")
+        let loginButton = document.getElementById("submit")
+        loginButton.addEventListener("click", function (event) {
+            event.preventDefault()
+            let givenEmail= "empher@gmail.com"
+            let  givenPassword ="empher@123"
+            let email = form.email.value
+            let password = form.password.value
+            if(email==givenEmail && password==givenPassword){
+                alert("Login Success")
+                window.location.href=`quize.html`
+            }else{
+                alert("wrong email password")
+            }
         
-        <script src="" async defer></script>
-    </body>
+        })
+
+    </script>
+</body>
+
 </html>
