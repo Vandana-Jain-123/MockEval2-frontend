@@ -76,7 +76,7 @@
 
         #displayData {
             display: grid;
-            grid-template-columns:repeat(4,1fr) ;
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px
         }
 
@@ -131,25 +131,25 @@
         loginButton = addEventListener("click", function (event) {
             event.preventDefault()
             let question = form.question.value
-            console.log(question ,"ques")
+            console.log(question, "ques")
             let optionA = form.optionA.value
             let optionB = form.optionB.value
             let optionC = form.optionC.value
             let optionD = form.optionD.value
             let correctOption = form.correctOption.value
-            let quizeQuestion = {question, optionA, optionB, optionC, optionD, correctOption, reviewStatus: false }
+            let quizeQuestion = { question, optionA, optionB, optionC, optionD, correctOption, reviewStatus: false }
             console.log(quizeQuestion)
             getTodoData(`${baseUrl}/quize`, quizeQuestion, question)
         })
 
         function showData(userArr) {
             let displayContainer = document.getElementById("displayData")
-          displayContainer.innerHTML = "";
+            displayContainer.innerHTML = "";
             userArr.forEach(e => {
 
                 let card = document.createElement("div")
                 let question = document.createElement("h4")
-                question.textContent =`question:${ e.question}`
+                question.textContent = `question:${e.question}`
 
                 let optionA = document.createElement("h4")
                 optionA.textContent = `optionA :${e.optionA}`
@@ -168,9 +168,24 @@
                 let correctOption = document.createElement("h4")
                 correctOption.textContent = `CorrectOption: ${e.correctOption}`
 
+                let reviewButton = document.createElement("button")
+                reviewButton.textContent = "review"
+                reviewButton.addEventListener("click", function () {
 
-                
-                card.append(question, optionA, optionB,optionC, optionD, correctOption)
+
+
+                })
+
+                let deleteButton = document.createElement("button")
+                deleteButton.textContent = "deleteQ"
+                deleteButton.addEventListener("click", function () {
+
+                  deleteQuestion(`${baseUrl}/quize`, e.id);
+
+                })
+
+
+                card.append(question, optionA, optionB, optionC, optionD, correctOption, deleteButton, reviewButton)
                 displayContainer.append(card)
 
             });
@@ -204,8 +219,8 @@
                     //     // if id present means length greater hoga 0 se 
                     //     alert("question is   already present ")
                     // } else {
-                        // here call function post data in if id not present
-                        postTodoData(url, quesObjData)
+                    // here call function post data in if id not present
+                    postTodoData(url, quesObjData)
                     //  }
                 })
                 .catch((err) => {
@@ -237,9 +252,24 @@
 
         }
 
+        //  fucntion delete 
+     
 
 
 
+function deleteQuestion(url, id) {
+    fetch(`${url}/${id}`, {
+        method: "DELETE",
+    })
+    .then(() => {
+        alert("Question Deleted...");
+        getApiData(url);
+    })
+    .catch((err) => {
+        alert("Something went wrong during deletion");
+        console.log(err);
+    });
+}
     </script>
 </body>
 
