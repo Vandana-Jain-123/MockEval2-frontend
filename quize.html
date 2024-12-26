@@ -136,7 +136,7 @@
             let optionC = form.optionC.value
             let optionD = form.optionD.value
             let correctOption = form.correctOption.value
-            let quizeQuestion = { optionA, optionB, optionC, optionD, correctOption, reviewStatus: false }
+            let quizeQuestion = {question, optionA, optionB, optionC, optionD, correctOption, reviewStatus: false }
             console.log(quizeQuestion)
             getTodoData(`${baseUrl}/quize`, quizeQuestion, question)
         })
