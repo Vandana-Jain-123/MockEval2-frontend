@@ -20,12 +20,72 @@
 
 
         }
+
         #navbar a {
             color: white;
             text-decoration: none;
             font-size: 25px;
             margin-left: 10%;
             padding-top: 10px;
+        }
+
+        #form {
+            margin-left: 40%;
+            margin-top: 6%;
+            padding-top: 30px;
+            background-color: rgb(128, 184, 184);
+            width: 350px;
+            height: 410px;
+            color: white;
+            text-align: center;
+
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+        }
+
+
+        #form input {
+            padding: 10px;
+            margin-top: 5%;
+            width: 250px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: none;
+
+        }
+
+        #form select {
+            margin-top: 10px;
+            width: 275px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+        }
+
+        #form button {
+            margin-top: 10px;
+            width: 275px;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 10px;
+            background-color: rgb(12, 138, 138);
+            color: white;
+            border: none;
+            font-size: 16px;
+        }
+
+        #displayData {
+            display: grid;
+            grid-template-columns:repeat(4,1fr) ;
+            gap: 20px
+        }
+
+        #displayData>div {
+            padding-left: 20px;
+            width: 250px;
+            height: 300px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border: 1px solid blue;
         }
     </style>
 </head>
@@ -38,16 +98,146 @@
         <a href="quize.html">quize</a>
         <a href="question.html">question</a>
     </nav>
-    <h1>Quize Mock</h1>
-    <script>
-         import { baseUrl } from "./baseUrl.js"
+    <h1>Add New Quize ques.</h1>
+    <form id="form" action="">
+        <h3>Quize Question</h3>
+        <input id="question" type="text" placeholder="Enter option A">
+        <input id="optionA" type="text" placeholder="Enter option B">
+        <input id="optionB" type="text" placeholder="Enter option C">
+        <input id="optionC" type="text" placeholder="Enter option D">
+        <input id="optionD" type="text" placeholder="Enter Password">
+        <input id="correctOption" type="text" placeholder="Enter correct option">
+        <button id="submit">Submit</button>
+    </form>
 
-         console.log(baseUrl)
+    <div id="displayData">
 
-         let form =document.getElementById("form")
-             let loginButton=document.getElementById("")
+    </div>
+    <script type="module">
+        // {
+        //         "title": "Which of the following methods is used to update?",
+        //             "optionA": "GET",
+        //                 "optionB": "POST",
+        //                     "optionC": "PATCH",
+        //                         "optionD": "DELETE",
+        //                             "correctOption": "C",
+        //                                 "reviewStatus": false
+        //     }
+        import { baseUrl } from "./baseUrl.js"
 
-         </script>
+        console.log(baseUrl)
+        let form = document.getElementById("form")
+        let loginButton = document.getElementById("submit")
+        loginButton = addEventListener("click", function (event) {
+            event.preventDefault()
+            let question = form.question.value
+            let optionA = form.optionA.value
+            let optionB = form.optionB.value
+            let optionC = form.optionC.value
+            let optionD = form.optionD.value
+            let correctOption = form.correctOption.value
+            let quizeQuestion = { optionA, optionB, optionC, optionD, correctOption, reviewStatus: false }
+            console.log(quizeQuestion)
+            getTodoData(`${baseUrl}/quize`, quizeQuestion, question)
+        })
+
+        function showData(userArr) {
+            let displayContainer = document.getElementById("displayData")
+          displayContainer.innerHTML = "";
+            userArr.forEach(e => {
+
+                let card = document.createElement("div")
+                let question = document.createElement("h4")
+                question.textContent = e.question
+
+                let optionA = document.createElement("h4")
+                optionA.textContent = e.optionA
+
+                let optionB = document.createElement("h4")
+                optionB.textContent = e.optionB
+
+
+                let optionC = document.createElement("h4")
+                optionC.textContent = e.optionC
+
+
+                let optionD = document.createElement("h4")
+                optionD.textContent = e.optionD
+
+                let correctOption = document.createElement("h4")
+                correctOption.textContent = e.correctOption
+
+                card.append(question, optionA, optionB,optionC, optionD, correctOption)
+                displayContainer.append(card)
+
+            });
+
+
+        }
+        // ******************************
+        function getApiData(url) {
+            fetch(url)
+                .then((res) => {
+                    return res.json()
+                }).then((result) => {
+                    console.log(result, "getApi")
+                    showData(result)
+                    return result
+                }).catch((err) => {
+                    console.log("err", err)
+                })
+
+        }
+        ///***************************************
+
+        function getTodoData(url, quesObjData, question) {
+            fetch(url)
+                .then((res) => {
+                    return res.json()
+                })
+                .then((result) => {
+                    let checkQues = result.filter((e) => e.question == question)
+                    if (checkQues.length !== 0) {
+                        // if id present means length greater hoga 0 se 
+                        alert("question is   already present ")
+                    } else {
+                        // here call function post data in todo-server if id not present
+                        postTodoData(url, quesObjData)
+                    }
+                })
+                .catch((err) => {
+                    console.log(err, "error")
+                })
+        }
+        //****************************
+        function postTodoData(url, quesObjData) {
+            console.log(url, "url", quesObjData, "objdata")
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify(quesObjData)
+
+            }).then((res) => {
+                return res.json()
+            }).then((result) => {
+                getApiData(url)
+                console.log("result", result)
+                return result
+
+            }).catch((err) => {
+                alert("something went wrong")
+                console(err, "errror")
+            })
+
+
+        }
+
+
+
+
+    </script>
 </body>
 
 </html>
