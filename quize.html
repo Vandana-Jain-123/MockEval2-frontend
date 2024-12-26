@@ -131,6 +131,7 @@
         loginButton = addEventListener("click", function (event) {
             event.preventDefault()
             let question = form.question.value
+            console.log(question ,"ques")
             let optionA = form.optionA.value
             let optionB = form.optionB.value
             let optionC = form.optionC.value
@@ -167,6 +168,8 @@
                 let correctOption = document.createElement("h4")
                 correctOption.textContent = `CorrectOption: ${e.correctOption}`
 
+
+                
                 card.append(question, optionA, optionB,optionC, optionD, correctOption)
                 displayContainer.append(card)
 
@@ -196,14 +199,14 @@
                     return res.json()
                 })
                 .then((result) => {
-                    let checkQues = result.filter((e) => e.question == question)
-                    if (checkQues.length !== 0) {
-                        // if id present means length greater hoga 0 se 
-                        alert("question is   already present ")
-                    } else {
-                        // here call function post data in todo-server if id not present
+                    // let checkQues = result.filter((e) => e.question == question)
+                    // if (checkQues.length !== 0) {
+                    //     // if id present means length greater hoga 0 se 
+                    //     alert("question is   already present ")
+                    // } else {
+                        // here call function post data in if id not present
                         postTodoData(url, quesObjData)
-                    }
+                    //  }
                 })
                 .catch((err) => {
                     console.log(err, "error")
